@@ -1,0 +1,195 @@
+
+Lameda par Dlo 
+
+Plugin Name: Lameda
+Plugin URI: http://didier.lorphelin.free.fr/blog/index.php/wordpress/lameda/
+Description: List attachment metadata
+Version: 0.1.5
+Author: Didier Lorphelin
+Author URI:
+Copyright : Lameda est édité sous licence GPL
+
+1. A quoi ça sert ?
+LAMEDA est l’acronyme de List Attachment MEtaDAta. Cette fonction s’utilise comme shortcode dans le corps du texte d’un article ou comme marqueur dans un fichier template pour produire l’affichage des métadonnées d’un attachement, comme les EXIFs d’une photo, par exemple.
+
+2. Prérequis
+WordPress: Lameda requiert l’utilisation de WP 2.5 (ou supérieur). Il est compatible avec toutes les versions de WordPress jusqu’à la dernière (2.5.1).
+ 
+3. Installation
+Télécharger le fichier. 
+Décompresser et copier tous les fichiers du répertoire /lameda (y compris les sous-répertoires) dans le répertoire wp-content/plugins/lameda de WordPress. 
+Le fichier lameda-fr_FR.mo qui se trouve dans le répertoire “languages” permet d’avoir la version française de Lameda. Pour localiser Lameda dans une autre langue, créer un fichier lameda-codelangue.po à partir du fichier lameda.pot avec PoEdit. 
+Insérer le shortcode [lameda] et ses attributs dans le texte de l’article qui devra contenir la liste des métadonnées d’un attachement ou insérer le marqueur dans les fichiers template du thème. 
+(Note: En cas de mise à jour d’une version antérieure, écraser simplement les fichiers existants avec les nouveaux.)
+
+4. Documentation
+4.1 Utilisation du shortcode [lameda]
+Le shortcode [lameda] sert à afficher les métadonnées d’un attachement. Il s’insère dans le corps du texte d’une page sous la forme [lameda attribut1=”valeur1? attribut2=”valeur2?].
+
+Les attributs utilisables sont les suivants:
+
+id: L’identifiant de l’attachement dont on veut afficher les métadonnées. En l’absence de cet attribut, le plugin affichera les métadonnées de l’article courant. 
+info: Option d’affichage des métadonnées. Valeurs possibles: 
+all : Toutes les métadonnées disponibles sont affichées. (Valeur par défaut) 
+nom de la métadonnée : Les informations de la métadonnée dont le nom est spécifié sont affichées. Valeurs disponibles non exhaustives: 
+image_meta : Informations sur une image, EXIF… 
+width : Largeur de l’image 
+height : Hauteur de l’image 
+file : Chemin d’accès complet à l’image 
+sizes : Diverses tailles disponibles de l’image 
+Le shortcode sera remplacé dans le texte par une table (class = “dlo_lameda”)  dont l’affichage est personnalisable via CSS.
+
+Cela s’utilise donc comme ceci:
+
+1) Créer un article dans l’éditeur.
+2) Charger une photo dans cet article en cliquant sur le bouton “Ajouter une image”.
+3) Récupèrer l’id de l’attachement créé par WordPress en regardant, dans l’onglet HTML de l’éditeur, le numéro situé à la fin de la classe wp-image-xx (par exemple wp-image-10) donnée à l’image. 
+4) Modifier le texte de l’article pour y inclure le shortcode [lameda] à l’endroit où doit apparaître la liste des métadonnées. Exemple:
+[lameda id=10 info="image_meta"] aura pour effet de lister les EXIFs de l’image dont l’identifiant est 10 dans l’article.
+
+4.2 Utilisation du shortcode [lameda_exif]
+Le shortcode [lameda_exif] sert à afficher les métadonnées d’un attachement de type image uniquement. Les données EXIF et ITPC stockées par WordPress lors du chargement de l’image seront restituées à l’écran dans l’ordre choisi. Il s’insère dans le corps du texte d’une page sous la forme [lameda_exif attribut1=”valeur1? attribut2=”valeur2?].
+
+Les attributs utilisables sont les suivants:
+
+id: L’identifiant de l’attachement dont on veut afficher les métadonnées. En l’absence de cet attribut, le plugin affichera les métadonnées de l’article courant. 
+info: Option d’affichage des données EXIF. Valeurs possibles: 
+all : Toutes les métadonnées disponibles sont affichées. (Valeur par défaut) 
+liste de métadonnées : Les informations de la métadonnée image_meta dont les noms sont spécifiés sont affichées dans l’ordre spécifié. Les différentes valeurs doivent être séparées par une virgule. Valeurs disponibles : 
+aperture : Ouverture du diaphragme 
+credit : Crédit 
+camera : Marque et modèle de l’appareil photo 
+caption: Texte 
+created_timestamp : Date de prise de vue 
+copyright : Informations de droits réservés 
+focal_length: Objectif 
+iso: Sensibilité ISO 
+shutter_speed: Vitesse d’obturation 
+title: Titre de la photo 
+Le shortcode sera remplacé dans le texte par une table (class = “dlo_lameda”)  dont l’affichage est personnalisable via CSS.
+
+Cela s’utilise donc comme ceci:
+
+1) Créer un article dans l’éditeur.
+2) Charger une photo dans cet article en cliquant sur le bouton “Ajouter une image”.
+3) Récupèrer l’id de l’attachement créé par WordPress en regardant, dans l’onglet HTML de l’éditeur, le numéro situé à la fin de la classe wp-image-xx (par exemple wp-image-10) donnée à l’image. 
+4) Modifier le texte de l’article pour y inclure le shortcode [lameda_exif] à l’endroit où doit apparaître la liste des métadonnées. Exemple:
+[lameda_exif id=10 info="title,camera,focal_length,iso,aperture,shutter_speed"] aura pour effet d’afficher le titre, le modèle d’appareil photo, l’objectif utilisé, la sensibilité du film, l’ouverture et la vitesse d’obturation de l’image de l’article dont l’identifiant est 10 dans l’article.
+
+4.3 Utilisation de la balise de template lameda()
+La fonction lameda() sert à afficher les métadonnées d’un attachement. Elle s’insère dans les fichiers template du thème sous la forme lameda (‘info’, ‘id’). Il est conseillé d’utiliser cette balise dans les templates spécifiques aux attachements tels que attachment.php, image.php, pdf.php, etc…  
+
+Les paramètres utilisables sont les suivants:
+
+id: L’identifiant de l’attachement dont on veut afficher les métadonnées. En l’absence de cet attribut, le plugin affichera les métadonnées de l’article courant. 
+info: Option d’affichage des métadonnées. Valeurs possibles: 
+all : Toutes les métadonnées disponibles sont affichées. (Valeur par défaut) 
+nom de la métadonnée : Les informations de la métadonnée dont le nom est spécifié sont affichées. Valeurs disponibles non exhaustives: 
+image_meta : Informations sur une image, EXIF… 
+width : Largeur de l’image 
+height : Hauteur de l’image 
+file : Chemin d’accès complet à l’image 
+sizes : Diverses tailles disponibles de l’image 
+La fonction sera génèrera une table (class = “dlo_lameda”)  dont l’affichage est personnalisable via CSS.
+
+Cela s’utilise donc comme ceci:
+
+1)Modifier les fichiers template en s’inspirant de celui-ci:
+
+<?php get_header(); ?>
+<div id="content" class="widecolumn">
+<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+<div class="post" id="post-<?php the_ID(); ?>">
+<h2><a href="<?php echo get_permalink($post->post_parent); ?>" rev="attachment"><?php echo get_the_title($post->post_parent); ?></a> » <?php the_title(); ?></h2>
+<div class="entry">
+<p class="attachment"><a href="<?php echo wp_get_attachment_url($post->ID); ?>"><?php echo wp_get_attachment_image( $post->ID, 'medium' ); ?></a></p>
+// ----------------------------
+<?php lameda('image_meta') ?>
+// ----------------------------
+<div class="caption"><?php if ( !empty($post->post_excerpt) ) the_excerpt(); // this is the "caption" ?></div>
+<?php the_content('<p class="serif">Read the rest of this entry »</p>'); ?>
+<div class="navigation">
+<div class="alignleft"><?php previous_image_link() ?></div>
+<div class="alignright"><?php next_image_link() ?></div>
+</div><br class="clear" />
+<?php endwhile; else: ?>
+<p>Sorry, no attachments matched your criteria.</p>
+<?php endif; ?>
+</div>
+<?php get_footer(); ?>
+2) Créer un article dans l’éditeur.
+3) Charger une photo dans cet article en cliquant sur le bouton “Ajouter une image”.
+4) Insérer cette photo dans l’article en sélectionnant “Link to page” pour ajouter un lien sur cette image qui utilisera le template d’attachement. 
+5) A l’affichage de l’article, cliquer sur la photo ouvrira une nouvelle page qui affichera cette image et les informations EXIF.
+
+4.4 Utilisation de la balise de template lameda_exif()
+La fonction lameda_exif() sert à afficher les métadonnées d’un attachement de type image uniquement. Les données EXIF et ITPC stockées par WordPress lors du chargement de l’image seront restituées à l’écran dans l’ordre choisi. Elle s’insère dans les fichiers template du thème sous la forme lameda_exif (‘info’, ’id’). Il est conseillé d’utiliser cette balise dans les templates spécifiques aux attachements tels que attachment.php, image.php, pdf.php, etc…  
+
+Les paramètres utilisables sont les suivants:
+
+id: L’identifiant de l’attachement dont on veut afficher les métadonnées. En l’absence de cet attribut, le plugin affichera les métadonnées de l’article courant. 
+info: Option d’affichage des données EXIF. Valeurs possibles: 
+all : Toutes les métadonnées disponibles sont affichées. (Valeur par défaut) 
+liste de métadonnées : Les informations de la métadonnée image_meta dont les noms sont spécifiés sont affichées dans l’ordre spécifié. Les différentes valeurs doivent être séparées par une virgule. Valeurs disponibles : 
+aperture : Ouverture du diaphragme 
+credit : Crédit 
+camera : Marque et modèle de l’appareil photo 
+caption: Texte 
+created_timestamp : Date de prise de vue 
+copyright : Informations de droits réservés 
+focal_length: Objectif 
+iso: Sensibilité ISO 
+shutter_speed: Vitesse d’obturation 
+title: Titre de la photo 
+La fonction génèrera une table (class = “dlo_lameda”)  dont l’affichage est personnalisable via CSS.
+
+Cela s’utilise donc comme ceci:
+
+1)Modifier les fichiers template en s’inspirant de celui-ci:
+
+<?php get_header(); ?>
+<div id="content" class="widecolumn">
+<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+<div class="post" id="post-<?php the_ID(); ?>">
+<h2><a href="<?php echo get_permalink($post->post_parent); ?>" rev="attachment"><?php echo get_the_title($post->post_parent); ?></a> » <?php the_title(); ?></h2>
+<div class="entry">
+<p class="attachment"><a href="<?php echo wp_get_attachment_url($post->ID); ?>"><?php echo wp_get_attachment_image( $post->ID, 'medium' ); ?></a></p>
+// --------------------------------------------------------------------------
+<?php lameda_exif(’title,camera,focal_length,iso,aperture,shutter_speed’) ?>
+// ————————————————————————–
+<div class=”caption”><?php if ( !empty($post->post_excerpt) ) the_excerpt(); // this is the “caption” ?></div>
+<?php the_content(’<p class=”serif”>Read the rest of this entry »</p>’); ?>
+<div class=”navigation”>
+<div class=”alignleft”><?php previous_image_link() ?></div>
+<div class=”alignright”><?php next_image_link() ?></div>
+</div><br class=”clear” />
+<?php endwhile; else: ?>
+<p>Sorry, no attachments matched your criteria.</p>
+<?php endif; ?>
+</div>
+<?php get_footer(); ?>
+2) Créer un article dans l’éditeur.
+3) Charger une photo dans cet article en cliquant sur le bouton “Ajouter une image”.
+4) Insérer cette photo dans l’article en sélectionnant “Link to page” pour ajouter un lien sur cette image qui utilisera le template d’attachement. 
+5) A l’affichage de l’article, cliquer sur la photo ouvrira une nouvelle page qui affichera cette image et les informations EXIF sélectionnées dans l’ordre choisi.
+
+5. Historique
+v. 0.1.5
+  Remplacement de la balise [lameda-exif] par [lameda_exif] suite à la version WP 2.5.1 qui a modifié le comportement des shortcode
+
+V. 0.1.4
+  Correction d'un bug - Suppression de l'affichage d'un message d'avertissement en cas de metadonnées invalides
+
+V. 0.1.3
+  Internationalisation du plugin et mise à disposition de la version française
+
+V. 0.1.2
+  Ajout d’une fonction spécifique pour afficher les EXIFs d’une photo 
+
+V. 0.1.1
+  Table des métadonnées générée avec class=”dlo_lameda” et balises th et td pour faciliter la mise en forme par CSS
+
+V. 0.1.0
+  Version initiale
+
+

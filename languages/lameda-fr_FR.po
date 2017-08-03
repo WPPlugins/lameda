@@ -1,0 +1,67 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: lameda\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2008-04-09 12:17+0100\n"
+"Last-Translator: dlo <dlo@dlo.fr>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+
+msgid "aperture"
+msgstr "ouverture:"
+
+msgid "credit"
+msgstr "cr&eacute;dit:"
+
+msgid "camera"
+msgstr "appareil:"
+
+msgid "caption"
+msgstr "l&eacute;gende:"
+
+msgid "created_timestamp"
+msgstr "date de cr&eacute;ation:"
+
+msgid "copyright"
+msgstr "copyright:"
+
+msgid "focal_length"
+msgstr "objectif:"
+
+msgid "iso"
+msgstr "iso:"
+
+msgid "shutter_speed"
+msgstr "vitesse:"
+
+msgid "title"
+msgstr "titre:"
+
+msgid "width"
+msgstr "largeur:"
+
+msgid "height"
+msgstr "hauteur:"
+
+msgid "hwstring_small"
+msgstr "hauteur x largeur:"
+
+msgid "file"
+msgstr "fichier:"
+
+msgid "sizes"
+msgstr "tailles:"
+
+msgid "thumbnail"
+msgstr "vignette:"
+
+msgid "medium"
+msgstr "moyen:"
+
+msgid "image_meta"
+msgstr "infos image:"
+
